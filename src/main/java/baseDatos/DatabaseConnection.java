@@ -2,47 +2,40 @@ package baseDatos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseConnection {
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/ProyectoCitasMedicas";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "morlo";
     private Connection connection;
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, USER, PASSWORD);
-    }
-
-    public void closeResultSet(ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                System.out.println("Error al cerrar el ResultSet: " + e.getMessage());
-            }
+    public void conectar() {
+        try {
+            Class.forName("org.postgresql.Driver");
+            String url = "jdbc:postgresql://localhost:5432/ProyectoCitasMedicas";
+            String username = "postgres";
+            String password = "morlo";
+            connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Conexión exitosa a la base de datos.");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error al cargar el controlador de la base de datos: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
         }
     }
 
-    public void closeStatement(PreparedStatement statement) {
-        if (statement != null) {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                System.out.println("Error al cerrar el PreparedStatement: " + e.getMessage());
-            }
-        }
-    }
-
-    public void closeConnection(Connection connection) {
-        if (connection != null) {
-            try {
+    public void desconectar() {
+        try {
+            if (connection != null) {
                 connection.close();
-            } catch (SQLException e) {
-                System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                System.out.println("Desconexión exitosa de la base de datos.");
             }
+        } catch (SQLException e) {
+            System.out.println("Error al desconectar de la base de datos: " + e.getMessage());
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

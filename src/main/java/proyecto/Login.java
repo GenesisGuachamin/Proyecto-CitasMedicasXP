@@ -10,8 +10,10 @@ public class Login {
     private String contrasena;
     private String tipoUsuario;
 
-    // Constructor vacío
-    public Login() {
+    public Login(String cedula, String contrasena, String tipoUsuario) {
+        this.cedula = cedula;
+        this.contrasena = contrasena;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public String getCedula() {
@@ -37,27 +39,13 @@ public class Login {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+    public void verificar(ControladorLogin controladorLogin) {
+        boolean credencialesValidas = controladorLogin.verificarCredenciales(this);
 
-    public void mostrarMenu(ControladorLogin controladorLogin) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Inicio de Sesión");
-        System.out.println("-----------------");
-
-        System.out.print("Cédula: ");
-        String cedula = scanner.nextLine();
-
-        System.out.print("Contraseña: ");
-        String contrasena = scanner.nextLine();
-
-        Login login = new Login();
-        login.setCedula(cedula);
-        login.setContrasena(contrasena);
-
-        if (controladorLogin.verificarCredenciales(login)) {
-            System.out.println("Credenciales válidas. Inicio de sesión exitoso.");
+        if (credencialesValidas) {
+            System.out.println("Inicio de sesión exitoso.");
         } else {
-            System.out.println("Credenciales inválidas. Inicio de sesión fallido.");
+            System.out.println("Credenciales inválidas. No se pudo iniciar sesión.");
         }
     }
 

@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ControladorLogin {
-    private final DatabaseConnection databaseConnection;
+    private DatabaseConnection databaseConnection;
 
     public ControladorLogin(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
@@ -23,7 +23,12 @@ public class ControladorLogin {
 
         try {
             connection = databaseConnection.getConnection();
-            String sql = "SELECT COUNT(*) FROM administrador WHERE cedula = ? AND contraseña = ?";
+            String sql = "";
+            if (login.getTipoUsuario().equals("administrador")) {
+                sql = "SELECT COUNT(*) FROM administrador WHERE cedula = ? AND contraseña = ?";
+            } else if (login.getTipoUsuario().equals("medico")) {
+                sql = "SELECT COUNT(*) FROM medico WHERE cedula = ? AND contraseña = ?";
+            }
             statement = connection.prepareStatement(sql);
             statement.setString(1, login.getCedula());
             statement.setString(2, login.getContrasena());
@@ -38,26 +43,42 @@ public class ControladorLogin {
         } catch (SQLException e) {
             System.out.println("Error al verificar las credenciales: " + e.getMessage());
         } finally {
-            databaseConnection.closeResultSet(resultSet);
-            databaseConnection.closeStatement(statement);
-            databaseConnection.closeConnection(connection);
+            closeResultSet(resultSet);
+            closeStatement(statement);
+            closeConnection(connection);
         }
 
         return credencialesValidas;
     }
 
-    public static void main(String[] args) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        ControladorLogin controladorLogin = new ControladorLogin(databaseConnection);
-        Login login = new Login();
-        login.setCedula("0123456789");
-        login.setContrasena("contraseña1");
-        login.setTipoUsuario("administrador");
+    private void closeResultSet(ResultSet resultSet) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar el ResultSet: " + e.getMessage());
+        }
+    }
 
-        if (controladorLogin.verificarCredenciales(login)) {
-            System.out.println("Credenciales válidas. Inicio de sesión exitoso.");
-        } else {
-            System.out.println("Credenciales inválidas. Inicio de sesión fallido.");
+    private void closeStatement(PreparedStatement statement) {
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar el PreparedStatement: " + e.getMessage());
+        }
+    }
+
+    private void closeConnection(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión: " + e.getMessage());
         }
     }
 }
+
