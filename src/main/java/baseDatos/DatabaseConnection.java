@@ -2,9 +2,9 @@ package baseDatos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class DatabaseConnection {
     private Connection connection;
@@ -37,5 +37,36 @@ public class DatabaseConnection {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void closeConnection(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.close();
+                System.out.println("Desconexión exitosa de la base de datos.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión a la base de datos: " + e.getMessage());
+        }
+    }
+
+    public void closeStatement(Statement statement) {
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar el statement: " + e.getMessage());
+        }
+    }
+
+    public void closeResultSet(ResultSet resultSet) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar el resultSet: " + e.getMessage());
+        }
     }
 }

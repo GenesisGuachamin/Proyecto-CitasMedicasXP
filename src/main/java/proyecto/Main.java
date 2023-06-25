@@ -1,7 +1,11 @@
 package proyecto;
 
+import Vistas.VistaAdministrador;
 import baseDatos.DatabaseConnection;
+import controladores.ControladorCita;
 import controladores.ControladorLogin;
+import controladores.ControladorMedico;
+import controladores.ControladorPaciente;
 
 import java.util.Scanner;
 
@@ -13,6 +17,9 @@ public class Main {
             DatabaseConnection databaseConnection = new DatabaseConnection();
             databaseConnection.conectar();
             ControladorLogin controladorLogin = new ControladorLogin(databaseConnection);
+            ControladorCita controladorCita= new ControladorCita(databaseConnection);
+            ControladorMedico controladorMedico= new ControladorMedico(databaseConnection);
+            ControladorPaciente controladorPaciente= new ControladorPaciente(databaseConnection);
 
             Scanner scanner = new Scanner(System.in);
 
@@ -51,9 +58,9 @@ public class Main {
             }
 
             Login login = new Login(cedula, contrasena, tipoUsuario);
-
             login.verificar(controladorLogin);
-
+            VistaAdministrador vistaAdministrador= new VistaAdministrador(controladorMedico,controladorPaciente,controladorCita);
+            vistaAdministrador.mostrarMenu();
             databaseConnection.desconectar();
         }
     }

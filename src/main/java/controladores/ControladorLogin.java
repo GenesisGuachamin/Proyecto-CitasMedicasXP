@@ -45,7 +45,6 @@ public class ControladorLogin {
         } finally {
             closeResultSet(resultSet);
             closeStatement(statement);
-            closeConnection(connection);
         }
 
         return credencialesValidas;
