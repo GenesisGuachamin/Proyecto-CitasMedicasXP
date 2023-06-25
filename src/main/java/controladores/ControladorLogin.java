@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ControladorLogin {
-    private DatabaseConnection databaseConnection;
+    private final DatabaseConnection databaseConnection;
 
     public ControladorLogin(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
