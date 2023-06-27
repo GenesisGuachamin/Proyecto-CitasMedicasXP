@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 public class ControladorLogin {
     private DatabaseConnection databaseConnection;
-    //hOLA COMPAÑEROS
 
     public ControladorLogin(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;

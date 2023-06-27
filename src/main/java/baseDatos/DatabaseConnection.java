@@ -17,12 +17,16 @@ public class DatabaseConnection {
             String password = "morlo";
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("Conexión exitosa a la base de datos.");
+
+            // Agrega la llamada al método isClosed() aquí
+            connection.isClosed();
         } catch (ClassNotFoundException e) {
             System.out.println("Error al cargar el controlador de la base de datos: " + e.getMessage());
         } catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
         }
     }
+
 
     public void desconectar() {
         try {
@@ -37,6 +41,10 @@ public class DatabaseConnection {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 
     public void closeConnection(Connection connection) {
