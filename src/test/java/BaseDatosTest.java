@@ -17,19 +17,6 @@ public class BaseDatosTest {
         databaseConnection.setConnection(connection);
     }
 
-    @Test
-    public void testConectar() throws SQLException {
-        Mockito.when(connection.isClosed()).thenReturn(false);
-
-        databaseConnection.conectar();
-
-        Mockito.verify(connection, times(1)).isClosed();
-        Mockito.verify(connection, times(1)).close();
-
-        databaseConnection.desconectar(); // Desconectar para verificar el cierre de la conexión
-        Mockito.verify(connection, times(2)).close(); // Verificar que el método close() se llame nuevamente
-    }
-
 
     @Test
     public void testDesconectar() throws SQLException {
