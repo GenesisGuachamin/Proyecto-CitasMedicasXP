@@ -85,9 +85,9 @@ public class ControladorCita {
 
         try {
             connection = databaseConnection.getConnection();
-            String sql = "SELECT * FROM cita LIMIT ?, 1";
+            String sql = "SELECT * FROM cita OFFSET ? LIMIT 1";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, index);
+            statement.setInt(1, Integer.parseInt(index));
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -107,6 +107,7 @@ public class ControladorCita {
 
         return cita;
     }
+
     public boolean actualizarCita(Cita cita) {
         boolean exito = false;
         Connection connection = null;
@@ -143,6 +144,11 @@ public class ControladorCita {
 
         try {
             connection = databaseConnection.getConnection();
+            connection.setAutoCommit(false); // Iniciar transacción
+
+            // Confirmación de eliminación (opcional)
+            // ...
+
             String sql = "DELETE FROM cita WHERE id = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, id);
@@ -151,13 +157,30 @@ public class ControladorCita {
             if (filasAfectadas > 0) {
                 exito = true;
                 System.out.println("Cita eliminada exitosamente.");
+                connection.commit(); // Confirmar transacción
             }
         } catch (SQLException e) {
             System.out.println("Error al eliminar la cita: " + e.getMessage());
+            if (connection != null) {
+                try {
+                    connection.rollback(); // Revertir transacción en caso de error
+                } catch (SQLException ex) {
+                    System.out.println("Error al revertir la transacción: " + ex.getMessage());
+                }
+            }
         } finally {
             databaseConnection.closeStatement(statement);
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true); // Restaurar el modo de autocommit
+                    databaseConnection.closeConnection(connection);
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                }
+            }
         }
 
         return exito;
     }
+
 }
