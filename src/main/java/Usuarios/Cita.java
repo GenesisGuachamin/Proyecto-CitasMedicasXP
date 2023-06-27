@@ -50,6 +50,7 @@ public class Cita {
     public void setMedico(String medico) {
         this.medico = medico;
     }
+    /*toString es innecesario*/
 
     public String getPaciente() {
         return paciente;
