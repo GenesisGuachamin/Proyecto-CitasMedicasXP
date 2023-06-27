@@ -57,8 +57,8 @@ public class ControladorPaciente {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                String nombre = resultSet.getString("nombre");
-                int edad = resultSet.getInt("edad");
+                String nombre = resultSet.getString("Nombre del Paciente");
+                int edad = resultSet.getInt("Edad");
                 paciente = new Paciente(cedula, nombre, edad);
             }
         } catch (SQLException e) {
@@ -84,9 +84,9 @@ public class ControladorPaciente {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String cedula = resultSet.getString("cedula");
-                String nombre = resultSet.getString("nombre");
-                int edad = resultSet.getInt("edad");
+                String cedula = resultSet.getString("Cédula del Paciente");
+                String nombre = resultSet.getString("Nombre del Paciente");
+                int edad = resultSet.getInt("Edad");
                 Paciente paciente = new Paciente(cedula, nombre, edad);
                 pacientes.add(paciente);
             }

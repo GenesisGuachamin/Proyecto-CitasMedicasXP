@@ -36,7 +36,7 @@ public class ControladorCita {
 
             if (filasAfectadas > 0) {
                 exito = true;
-                System.out.println("Cita agregada exitosamente.");
+                System.out.println("¡¡Cita agregada con éxito!!");
             }
         } catch (SQLException e) {
             System.out.println("Error al agregar la cita: " + e.getMessage());
@@ -60,7 +60,7 @@ public class ControladorCita {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
+                String id = resultSet.getString("id Cita");
                 LocalDateTime fecha = resultSet.getObject("fecha", LocalDateTime.class);
                 String especialidad = resultSet.getString("especialidad");
                 String medico = resultSet.getString("medico");
@@ -91,7 +91,7 @@ public class ControladorCita {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                String id = resultSet.getString("id");
+                String id = resultSet.getString("id Cita");
                 LocalDateTime fecha = resultSet.getObject("fecha", LocalDateTime.class);
                 String especialidad = resultSet.getString("especialidad");
                 String medico = resultSet.getString("medico");

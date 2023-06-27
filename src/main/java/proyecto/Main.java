@@ -22,15 +22,11 @@ public class Main {
             ControladorPaciente controladorPaciente= new ControladorPaciente(databaseConnection);
 
             Scanner scanner = new Scanner(System.in);
+            System.out.println("--------------------------------------------------");
+            System.out.println("***** Bienvenido al sistema de citas médicas *****");
+            System.out.println("--------------------------------------------------");
 
-            System.out.println("Bienvenido al sistema de citas médicas");
-            System.out.println("--------------------------------------");
-
-            System.out.println("Ingrese su cédula:");
-            String cedula = scanner.nextLine();
-
-            System.out.println("Ingrese su contraseña:");
-            String contrasena = scanner.nextLine();
+            System.out.println(" *********** MENÚ PRINCIPAL DE USUARIO ***********");
 
             System.out.println("Seleccione el tipo de usuario:");
             System.out.println("1. Administrador");
@@ -38,7 +34,7 @@ public class Main {
             System.out.println("3. Salir");
 
             int opcion = scanner.nextInt();
-
+            scanner.nextLine();
             String tipoUsuario;
             switch (opcion) {
                 case 1:
@@ -56,6 +52,12 @@ public class Main {
                     databaseConnection.desconectar();
                     return;
             }
+
+            System.out.println("Ingrese su cédula:");
+            String cedula = scanner.nextLine();
+
+            System.out.println("Ingrese su contraseña:");
+            String contrasena = scanner.nextLine();
 
             Login login = new Login(cedula, contrasena, tipoUsuario);
             login.verificar(controladorLogin);
