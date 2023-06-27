@@ -46,4 +46,5 @@ public class Administrador {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
+    /*Proximamente controles sobre citas y usuarios*/
 }
