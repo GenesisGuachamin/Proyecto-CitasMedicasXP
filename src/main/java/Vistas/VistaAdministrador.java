@@ -350,8 +350,8 @@ public class VistaAdministrador {
         System.out.print("Cédula del Paciente: ");
         String cedulaPaciente = scanner.nextLine();
         Paciente paciente = controladorPaciente.obtenerPaciente(cedulaPaciente);
-        Cita cita = new Cita(id, fecha, especialidad, medico.getNombre(), paciente.getNombre());
         if (medico != null && paciente != null) {
+            Cita cita = new Cita(id, fecha, especialidad, medico.getNombre(), paciente.getNombre());
             controladorCita.agregarCita(cita);
             System.out.println("Cita agendada exitosamente.");
         } else {
