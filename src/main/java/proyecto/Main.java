@@ -64,7 +64,7 @@ public class Main {
             VistaAdministrador vistaAdministrador= new VistaAdministrador(controladorMedico,controladorPaciente,controladorCita);
             vistaAdministrador.mostrarMenu();
             databaseConnection.desconectar();
-            //Esto es un cambio
+            //Cambio
         }
     }
 
